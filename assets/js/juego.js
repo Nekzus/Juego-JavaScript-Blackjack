@@ -2,8 +2,8 @@
 
 const miModulo = (() => {
     'use strict';
-
-    let deck = [];
+    let nombreJugador = (prompt("BIENVENIDO A BLACKJACK\n Ingresa tu Nombre")).toLowerCase(),
+        deck = [];
     const tipos = ['C','D','H','S'],
         especiales = ['A','J','Q','K'];
 
@@ -15,8 +15,19 @@ const miModulo = (() => {
         btnNuevo= document.querySelector('#btnNuevo');
 
     const divCartasJugadores = document.querySelectorAll('.divCartas'),
-        puntosHTML = document.querySelectorAll('small');
-
+        puntosHTML = document.querySelectorAll('small'),
+        nombreHTML= document.querySelector('.nombre-jugador-1');
+    
+    const capitalizarNombre = (nombre) => {
+        if(nombre != '') {
+            nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+        } else {
+            nombre = 'Jugador 1';
+        }
+            return nombre;
+    }
+    let nombreCapitalizado = capitalizarNombre(nombreJugador);
+    nombreHTML.innerText = nombreCapitalizado;
     // Esta funcion inicializa el juego
     const inicializarJuego = (numJugadores = 2) => {
         deck = crearDeck();
@@ -86,11 +97,11 @@ const miModulo = (() => {
 
         setTimeout(() => {
             if(puntosComputadora === puntosMinimos) {
-                alert('Nadie Gana :(');
+                alert(`De no creer ${nombreCapitalizado}, fue empate.`);
             } else if(puntosMinimos > puntosComputadora && puntosMinimos <= 21  || puntosComputadora > 21) {
-                alert('Ganaste!!!');
+                alert(`La fortuna te sonrie ${nombreCapitalizado}!!!...Ganaste!!!`);
             } else if(puntosMinimos < puntosComputadora && puntosComputadora <= 21 || puntosMinimos > 21) {
-                alert('Perdiste!!!');
+                alert(`Mala suerte ${nombreCapitalizado}...sera la próxima.`);
             }
         }, 100);
     }
